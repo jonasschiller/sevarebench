@@ -19,6 +19,9 @@ bitcoinNIC0: &NICtestbedC eno5
 bitcoincashNIC0: *NICtestbedC
 bitcoingoldNIC0: *NICtestbedC
 
+litecoinNIC0: *NICtestbedC
+litecoincashNIC0: *NICtestbedC
+
 etherNIC0: *NICtestbedC
 ethercashNIC0: *NICtestbedC
 ethergoldNIC0: *NICtestbedC
