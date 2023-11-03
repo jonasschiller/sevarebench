@@ -222,6 +222,7 @@ while [ $i -lt $maxtry ] && ! $success; do
 	success=true
 	echo "____try $i" >> makelog
 	make -j "$maxjobs" $protocols &>> makelog || success=false
+ 	echo makelog
 	((++i))
 	sleep 1
 done
