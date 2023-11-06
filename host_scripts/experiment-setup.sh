@@ -226,7 +226,7 @@ while [ $i -lt $maxtry ] && ! $success; do
 	((++i))
 	sleep 1
 done
-
+pos_upload makelog
 # abort if no success
 $success
 
