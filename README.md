@@ -1,4 +1,3 @@
-# Testing Branch for TTP extension implementation
 
 # Benchmark MP-SPDZ programs in pos testing environments
 
