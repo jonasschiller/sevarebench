@@ -318,7 +318,6 @@ setParameters() {
 
     # delete line measureram from loop_var, if active
     sed -i '/measureram/d' "$loopvarpath"
-
     # set default swap size, in case --ram is defined
     [ "${#RAM[*]}" -gt 0 ] && SWAP=${SWAP:-4096}
 
