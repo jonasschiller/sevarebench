@@ -6,10 +6,9 @@ Array operations
 import operator
 
 program.bit_length = 64
-sfix.set_precision(16, 31)
 size = int(program.args[1])
 player = 3
-
+datatype = sint
 op=operator.gt
 
 base = 0
@@ -25,6 +24,6 @@ for i in range(size):
     result[i] = datatype(base);
     result[i] = 0;
     for j in range(player):
-        if(op(inputs[j][i],result[i])):
+        if(op(inputs[j][i],result[i]))
             result[i] = inputs[j][i]
 result.print_reveal_nested()
