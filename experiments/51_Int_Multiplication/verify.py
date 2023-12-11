@@ -1,7 +1,8 @@
+#! /usr/bin/python3
 import re
 import numpy as np
 import sys
-
+import os.path
 
 def load_results(path):
     f = open(path,'r')
