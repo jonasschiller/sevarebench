@@ -2,7 +2,6 @@ program.bit_length = 64
 size = int(program.args[1])
 player = 3
 datatype = sint
-op = operator.and_
 base = 0
 
 inputs = Matrix(player, size, datatype)
@@ -15,5 +14,5 @@ result = datatype.Array(size)
 for i in range(size):
     result[i] = datatype(base);
     for j in range(player):
-        result[i] = op(result[i],inputs[j][i])
+        result[i] = result[i] && inputs[j][i]
 result.print_reveal_nested()
