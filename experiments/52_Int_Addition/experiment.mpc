@@ -6,14 +6,13 @@ Array operations
 import operator
 
 program.bit_length = 64
-sfix.set_precision(16, 31)
 size = int(program.args[1])
-player = 2
+player = 3
 
 datatype = sint
 op=operator.add
 
-base = 1
+base = 0
 
 inputs = Matrix(player, size, datatype)
 
