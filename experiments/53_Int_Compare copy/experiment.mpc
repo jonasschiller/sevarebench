@@ -1,0 +1,31 @@
+
+
+"""
+Array operations
+"""
+import operator
+
+program.bit_length = 64
+sfix.set_precision(16, 31)
+size = int(program.args[1])
+player = 2
+
+datatype = sint
+op=operator.add
+
+base = 1
+
+inputs = Matrix(player, size, datatype)
+
+for i in range(player):
+    for j in range(size):
+        inputs[i][j] = datatype.get_input_from(i)
+
+result = datatype.Array(size)
+for i in range(size):
+    result[i] = datatype(base);
+    result[i] = 0;
+    for j in range(player):
+        if(inputs[j][i]>result[i]):
+            result[i] = inputs[j][i]
+result.print_reveal_nested()
