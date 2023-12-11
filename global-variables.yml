@@ -4,10 +4,10 @@ repo: https://github.com/data61/MP-SPDZ.git
 # experimental commit state
 repo_commit: 6a0a7807897ad4300594b048983e34627f4af9c0
 repo_dir: /root/MP-SPDZ
-repo2: https://github.com/vyrovcz/sevarebench.git
+repo2: https://github.com/jonasschiller/sevarebench.git
 # changing the repo_paths requires changing them in pos_helper.sh too
 repo2_dir: /root/sevarebench
-repoupload: git@github.com:vyrovcz/sevaremeasurements.git
+repoupload: git@github.com:jonasschiller/sevaremeasurements.git
 
 #######
 ## Networking environment definitions
@@ -18,6 +18,9 @@ repoupload: git@github.com:vyrovcz/sevaremeasurements.git
 bitcoinNIC0: &NICtestbedC eno5
 bitcoincashNIC0: *NICtestbedC
 bitcoingoldNIC0: *NICtestbedC
+
+litecoinNIC0: *NICtestbedC
+litecoincashNIC0: *NICtestbedC
 
 etherNIC0: *NICtestbedC
 ethercashNIC0: *NICtestbedC
