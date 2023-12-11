@@ -3,6 +3,7 @@
 import sys
 import os.path
 import numpy as np
+import numpy as np
 np.set_printoptions(threshold=np.inf)
 np.set_printoptions(linewidth=np.inf)
 
@@ -31,8 +32,7 @@ while os.path.isfile("Player-Data/Input-P" + str(player) +"-0"):
     player += 1
 
 result = inputs[0]
-for i in range(1, len(inputs)):
-    result = np.multiply(result, inputs[i])
+result = np.bitwise_and.reduce(inputs, axis=0)
 
 print([x for x in result])
 
