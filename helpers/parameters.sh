@@ -249,10 +249,10 @@ setParameters() {
     [ "$protocolcount" -lt 1 ] && 
         usage "no protocols specified"
 
-     # node already in use check
+    #node already in use check
     nodetasks=$(pgrep -facu "$(id -u)" "${NODES[0]}")
     [ "$nodetasks" -gt 4 ] && error $LINENO "${FUNCNAME[0]}(): it appears host ${NODES[0]} is currently in use"
-
+  #
     # add extra flags to parameters yaml
     parapath=experiments/"$EXPERIMENT"/parameters.yml
 
@@ -318,7 +318,6 @@ setParameters() {
 
     # delete line measureram from loop_var, if active
     sed -i '/measureram/d' "$loopvarpath"
-
     # set default swap size, in case --ram is defined
     [ "${#RAM[*]}" -gt 0 ] && SWAP=${SWAP:-4096}
 

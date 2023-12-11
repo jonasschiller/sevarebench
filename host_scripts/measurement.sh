@@ -131,7 +131,7 @@ for protocol in "${protocols[@]}"; do
 
     # run the SMC protocol
     $skip ||
-        /bin/time -f "$timerf" ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
+        /bin/time -f "$timerf" -v ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
             experiment-"$size"-"$partysize"-"$etype" &> "$log" || success=false
 
     pos_upload --loop "$log"
