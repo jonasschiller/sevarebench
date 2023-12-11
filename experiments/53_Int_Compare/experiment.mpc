@@ -24,6 +24,6 @@ for i in range(size):
     result[i] = datatype(base);
     result[i] = 0;
     for j in range(player):
-        if(op(inputs[j][i],result[i]))
+        if(inputs[j][i]>result[i]==1)
             result[i] = inputs[j][i]
 result.print_reveal_nested()
