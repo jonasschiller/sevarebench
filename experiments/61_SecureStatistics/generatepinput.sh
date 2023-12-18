@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REPO2_DIR=$(pos_get_variable repo2_dir --from-global)
-amount=$1
+amount=$1*3
 partysize=$2
 inputtype="-t"
 
