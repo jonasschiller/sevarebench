@@ -6,7 +6,7 @@ import operator
 
 from Compiler.types import sint, regint, Array, MemValue
 from Compiler.library import print_ln, do_while, for_range
-from Compiler.util import if_else,if_
+from Compiler.util import if_else
 
 program.bit_length = 64
 size = int(program.args[1])
