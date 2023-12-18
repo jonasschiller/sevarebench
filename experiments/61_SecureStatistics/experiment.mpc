@@ -10,7 +10,7 @@ from Compiler.util import if_else,if_
 
 program.bit_length = 64
 size = int(program.args[1])
-player = 3
+player = int(program.args[2])
 features = 3
 
 datatype = sint
