@@ -4,6 +4,10 @@ Array operations
 """
 import operator
 
+from Compiler.types import sint, regint, Array, MemValue
+from Compiler.library import print_ln, do_while, for_range
+from Compiler.util import if_else,if_
+
 program.bit_length = 64
 size = int(program.args[1])
 player = 3
@@ -22,19 +26,22 @@ for i in range(player):
             inputs[features*i+s][j] = datatype.get_input_from(i)
 
 #Use the same loop to calculate the min, max and sum of the values
-max_values=datatype.Array()
-min_values=datatype.Array()
-sum_values=datatype.Array()
+max_values=datatype.Array(player)
+min_values=datatype.Array(player)
+sum_values=datatype.Array(player)
 # Calculate the Maximum
-for i in range(player):
+@for_range(player):
+def player_loop(i):
     sum_values[i]=0
-    for s in range(features):
+    @for_range(features):
+    def value_loop(s):
         max_values[i]=input[features*i+s][0]
         min_values[i]=input[features*i+s][0]
-        for j in range(size):
-            if inputs[features*i+s][j]>result[i]:
+        @for_range(size):
+        def size_loop(j):
+            @if_(inputs[features*i+s][j]>result[i]):
                 max_values[i]=inputs[features*i+s][j]
-            if inputs[features*i+s][j]<result[i]:
+            @if_(inputs[features*i+s][j]<result[i]):
                 min_values[i]=inputs[features*i+s][j]
             sum_values[i]=sum_values[i]+inputs[features*i+s][j]
 
