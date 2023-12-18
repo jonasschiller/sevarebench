@@ -1,0 +1,50 @@
+
+"""
+Array operations
+"""
+import operator
+
+program.bit_length = 64
+size = int(program.args[1])
+player = 3
+features = 3
+
+datatype = sint
+op=operator.mul
+
+base = 0
+
+inputs = Matrix(features*player, size, datatype)
+
+for i in range(player):
+    for s in range(features):
+        for j in range(size):
+            inputs[features*i+s][j] = datatype.get_input_from(i)
+
+#Use the same loop to calculate the min, max and sum of the values
+max_values=datatype.Array()
+min_values=datatype.Array()
+sum_values=datatype.Array()
+# Calculate the Maximum
+for i in range(player):
+    sum_values[i]=0
+    for s in range(features):
+        max_values[i]=input[features*i+s][0]
+        min_values[i]=input[features*i+s][0]
+        for j in range(size):
+            if inputs[features*i+s][j]>result[i]:
+                max_values[i]=inputs[features*i+s][j]
+            if inputs[features*i+s][j]<result[i]:
+                min_values[i]=inputs[features*i+s][j]
+            sum_values[i]=sum_values[i]+inputs[features*i+s][j]
+
+#Calculate the mean of the input
+
+mean_values=datatype.Array()
+for i in range(features):
+    mean_values[i]=sum_values[i]/(player*size)
+
+max_values.print_reveal_nested()
+min_values.print_reveal_nested()
+sum_values.print_reveal_nested()
+mean_values.print_reveal_nested()

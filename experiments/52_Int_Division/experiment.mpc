@@ -10,7 +10,7 @@ size = int(program.args[1])
 player = 3
 
 datatype = sint
-op=operator.add
+op=operator.truediv
 
 base = 0
 
