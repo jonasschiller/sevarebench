@@ -31,30 +31,23 @@ min_values=datatype.Array(player)
 sum_values=datatype.Array(player)
 results=datatype.Array(player)
 # Calculate the Maximum
-@for_range(player)
-def player_loop(i):
+for i in range(player):
     sum_values[i]=0
-    @for_range(features)
-    def value_loop(s):
+    for s in range(features):
         max_values[i]=inputs[features*i+s][0]
         min_values[i]=inputs[features*i+s][0]
-        @for_range(size)
-        def size_loop(j):
-            @if_(inputs[features*i+s][j]>result[i])
-            def _():
-                max_values[i]=inputs[features*i+s][j]
-            @if_(inputs[features*i+s][j]<result[i])
-            def _():
-                min_values[i]=inputs[features*i+s][j]
+        for j in range(size):
+            max_values[i]=inputs[features*i+s][j].max(max_values[i])
+            min_values[i]=inputs[features*i+s][j].max(max_values[i])
             sum_values[i]=sum_values[i]+inputs[features*i+s][j]
 
 #Calculate the mean of the input
 
-mean_values=datatype.Array()
-for i in range(features):
-    mean_values[i]=sum_values[i]/(player*size)
+#mean_values=datatype.Array()
+#for i in range(features):
+#    mean_values[i]=sum_values[i]/(player*size)
 
 max_values.print_reveal_nested()
 min_values.print_reveal_nested()
 sum_values.print_reveal_nested()
-mean_values.print_reveal_nested()
+#mean_values.print_reveal_nested()
