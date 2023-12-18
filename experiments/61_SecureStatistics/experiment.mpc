@@ -29,20 +29,23 @@ for i in range(player):
 max_values=datatype.Array(player)
 min_values=datatype.Array(player)
 sum_values=datatype.Array(player)
+results=datatype.Array(player)
 # Calculate the Maximum
-@for_range(player):
+@for_range(player)
 def player_loop(i):
     sum_values[i]=0
-    @for_range(features):
+    @for_range(features)
     def value_loop(s):
-        max_values[i]=input[features*i+s][0]
-        min_values[i]=input[features*i+s][0]
-        @for_range(size):
+        max_values[i]=inputs[features*i+s][0]
+        min_values[i]=inputs[features*i+s][0]
+        @for_range(size)
         def size_loop(j):
-            @if_(inputs[features*i+s][j]>result[i]):
-                max_values[i]=inputs[features*i+s][j]
-            @if_(inputs[features*i+s][j]<result[i]):
-                min_values[i]=inputs[features*i+s][j]
+            @if_(inputs[features*i+s][j]>result[i])
+                def _():
+                    max_values[i]=inputs[features*i+s][j]
+            @if_(inputs[features*i+s][j]<result[i])
+                def _():
+                    min_values[i]=inputs[features*i+s][j]
             sum_values[i]=sum_values[i]+inputs[features*i+s][j]
 
 #Calculate the mean of the input
