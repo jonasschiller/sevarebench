@@ -22,8 +22,6 @@ for i in range(player):
 result = datatype.Array(size)
 for i in range(size):
     result[i] = datatype(base);
-    result[i] = 0;
     for j in range(player):
-        if(inputs[j][i]>result[i]==1)
-            result[i] = inputs[j][i]
+        result[i]=result[i].max(inputs[i][j])
 result.print_reveal_nested()

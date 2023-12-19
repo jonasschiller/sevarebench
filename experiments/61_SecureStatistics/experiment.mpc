@@ -1,6 +1,6 @@
 
 """
-Array operations
+Secure Statistics
 """
 import operator
 
@@ -8,9 +8,10 @@ from Compiler.types import sint, regint, Array, MemValue
 from Compiler.library import print_ln, do_while, for_range
 from Compiler.util import if_else
 
-program.bit_length = 64
+program.bit_length = 32
 size = int(program.args[1])
 player = int(program.args[2])
+etype= int(program.args[3])
 features = 3
 
 datatype = sint
@@ -39,7 +40,7 @@ def player_loop(i):
         max_values[i]=inputs[features*i+s][0]
         min_values[i]=inputs[features*i+s][0]
         @for_range(size)
-        def size_loop(s):
+        def size_loop(j):
             max_values[i]=inputs[features*i+s][j].max(max_values[i])
             min_values[i]=inputs[features*i+s][j].max(max_values[i])
             sum_values[i]=sum_values[i]+inputs[features*i+s][j]
