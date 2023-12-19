@@ -66,7 +66,6 @@ except:
         print("  -b: binary, print numbers in binary representation")
 
         exit()
-print(option)
 # python3.9 and lower support
 if (option == 't'):
         print(set_to_string(get_random_tupel(n)))
