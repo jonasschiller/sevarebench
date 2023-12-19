@@ -13,7 +13,7 @@ base = 0
 inputs = Matrix(player, size, datatype)
 
 for i in range(player):
-    for j in range(size)
+    for j in range(size):
         inputs[i][j] = datatype.get_input_from(i)
 
 result = datatype.Array(size)
