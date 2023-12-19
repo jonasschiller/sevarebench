@@ -17,6 +17,7 @@ for i in range(player):
 
 result = datatype.Array(size)
 result.assign_all(datatype(base))
-for i in range(player):
-    result = result*inputs[i]
+@for_range(player)
+def bit_and(i):
+    result = op(result,inputs[i])
 result.print_reveal_nested()
