@@ -3,7 +3,7 @@
 REPO2_DIR=$(pos_get_variable repo2_dir --from-global)
 amount=$1
 partysize=$2
-inputtype="-t"
+inputtype="-z"
 
 echo "create matrix with base-size: $amount"
 for i in $(seq 0 $((partysize-1))); do

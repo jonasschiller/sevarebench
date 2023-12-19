@@ -16,8 +16,11 @@ def get_random_set(n: int):
                 rand_set.add(randint(1, rrange))
         return rand_set
 
-def get_random_tupel(n: int):
-        return [randint(1, rrange) for i in range(n)]
+def get_random_tupel(n: int, binary=False):
+        if binary:
+                return [randint(0, 1) for i in range(n)]
+        else:
+                return [randint(1, rrange) for i in range(n)]
 
 def get_random_matrix(n: int):
         return [get_random_tupel(n) for i in range(n)]
@@ -57,12 +60,13 @@ except:
         print("  -f: float, Print <amount> many random numbers in range [1:<range>]")
         print("  -m: matrix, Print <amount>^2 many random numbers in range [1:<range>]")
         print("  -k: floatmatrix, Print <amount>^2 many random numbers in range [1:<range>]")
+        print("  -z: binary tupel, Print <amount> many random numbers in range [0:1]")
         print("Modes:")
         print("  -d: decimal base10, print numbers in decimal (default)")
         print("  -b: binary, print numbers in binary representation")
 
         exit()
-
+print(option)
 # python3.9 and lower support
 if (option == 't'):
         print(set_to_string(get_random_tupel(n)))
@@ -72,6 +76,8 @@ elif (option == 'm'):
         print(matrix_to_string(get_random_matrix(n)))
 elif (option == 'k'):
         print(matrix_to_string(get_random_float_matrix(n)))
+elif (option == 'z'):
+        print(set_to_string(get_random_tupel(n,binary=True)))
 else:
         print(set_to_string(get_random_set(n)))
 
