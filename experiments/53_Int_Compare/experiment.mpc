@@ -20,8 +20,10 @@ for i in range(player):
         inputs[i][j] = datatype.get_input_from(i)
 
 result = datatype.Array(size)
-for i in range(size):
+@for_range(size)
+def element_loop(i):
     result[i] = datatype(base);
-    for j in range(player):
-        result[i]=result[i].max(inputs[i][j])
+    @for_range(player)
+    def player_loop(j):
+        result[i]=result[i].max(inputs[j][i])
 result.print_reveal_nested()
