@@ -5,19 +5,20 @@ Array operations
 import operator
 program.bit_length = 32
 size = int(program.args[1])
-player = 3
-datatype = sint
+player = 2
+datatype = sintbit
 op = operator.and_
 base = 0
 
 inputs = Matrix(player, size, datatype)
 
 for i in range(player):
-        inputs[i] = datatype.get_input_from(i,size=size)
+    for j in range(size)
+        inputs[i][j] = datatype.get_input_from(i)
 
 result = datatype.Array(size)
 result.assign_all(datatype(base))
-@for_range(player)
+@for_range(size)
 def bit_and(i):
-    result = op(result,inputs[i])
+    result[i] = op(inputs[0][i],inputs[1][i])
 result.print_reveal_nested()
