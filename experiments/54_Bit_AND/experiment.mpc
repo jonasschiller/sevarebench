@@ -2,23 +2,16 @@
 """
 Array operations
 """
-import operator
-program.bit_length = 32
+
+
 size = int(program.args[1])
-player = 2
+program.bit_length = 32
+player = 3
+
 datatype = sintbit
-op = operator.and_
-base = 0
 
-inputs = Matrix(player, size, datatype)
-
-for i in range(player):
-    for j in range(size):
-        inputs[i][j] = datatype.get_input_from(i)
-
-result = datatype.Array(size)
-result.assign_all(datatype(base))
-@for_range(size)
-def bit_and(i):
-    result[i] = op(inputs[0][i],inputs[1][i])
-result.print_reveal_nested()
+inputs=sint.Array(size)
+inputs=inputs.assign_all(1)
+inputs=inputs & inputs
+#verification 
+inputs[-1].reveal()

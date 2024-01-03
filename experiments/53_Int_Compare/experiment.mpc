@@ -3,27 +3,17 @@
 """
 Array operations
 """
-import operator
 
-program.bit_length = 64
+program.bit_length = 32
 size = int(program.args[1])
 player = 3
+
+base = 1
+
 datatype = sint
-op=operator.gt
 
-base = 0
-
-inputs = Matrix(player, size, datatype)
-
-for i in range(player):
-    for j in range(size):
-        inputs[i][j] = datatype.get_input_from(i)
-
-result = datatype.Array(size)
-@for_range(size)
-def element_loop(i):
-    result[i] = datatype(base);
-    @for_range(player)
-    def player_loop(j):
-        result[i]=result[i].max(inputs[j][i])
-result.print_reveal_nested()
+inputs=sint.Array(size)
+inputs=inputs.assign_all(base)
+inputs=inputs/inputs
+#verification 
+inputs[-1].reveal()
