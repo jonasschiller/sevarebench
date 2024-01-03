@@ -14,6 +14,6 @@ datatype = sint
 
 inputs=sint.Array(size)
 inputs=inputs.assign_all(base)
-inputs=inputs/inputs
+inputs=inputs>inputs
 #verification 
 inputs[-1].reveal()
