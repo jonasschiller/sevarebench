@@ -8,7 +8,7 @@ n_parties = 3
 #n_threads = int(math.ceil(2 ** (int(math.log(n_inputs, 2) - 7))))
 n_bits = 64
 value_type = sint
-price_range=10000
+priceRange=10000
 
 program.set_bit_length(n_bits)
 program.set_security(40)
@@ -36,13 +36,13 @@ def calculateBidingPrice(bids,offers):
         accumulatedSupply=0
         accumulatedDemand=0
         for offer in offers:
-            @if_(offer.price <= i)
-            def _():
-                accumulatedSupply= accumulatedSupply+offer.price
+            comp=offer.price <= i
+            a,b =util.cond_swap(comp,0,offer.Price)
+            accumulatedSupply= accumulatedSupply+b
         for bid in bids:
-            @if_(bid.Price >= i)
-            def _():
-                accumulatedDemand=accumulatedDemand+bid.Quantity
+            comp=bid.Price >= i
+            a,b=util.cond_swap(comp,0,bid.Price)
+            accumulatedDemand=accumulatedDemand+b
         this_z= accumulatedDemand-accumulatedSupply
         print(this_z)
         if abs(this_z)<=abs(smallest_z):
