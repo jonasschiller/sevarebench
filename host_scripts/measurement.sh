@@ -36,9 +36,16 @@ cd "$REPO_DIR"
 {
     echo "player: $player, cdomain: $cdomain, protocols: ${protocols[*]}, types: ${types[*]}"
 
-    # experiment specific part: generate random input
-    echo "create $partysize random set of size: $size"
-    bash "$REPO2_DIR"/experiments/"$EXPERIMENT"/generatepinput.sh "$size" "$partysize" "$etype"
+    # experiment specific part: load the input from the experiment into the Player Data folder of MP-SPDZ
+    if [ -f "$EXPERIMENT/PlayerData-P0-0" ]; then
+        cp "$EXPERIMENT/PlayerData-P0-0" REPO2_DIR/Player-Data/Player-Data-P0-0
+    fi
+    if [ -f "$EXPERIMENT/PlayerData-P1-0" ]; then
+        cp "$EXPERIMENT/PlayerData-P1-0" REPO2_DIR/Player-Data/Player-Data-P1-0
+    fi
+    if [ -f "$EXPERIMENT/PlayerData-P2-0" ]; then
+        cp "$EXPERIMENT/PlayerData-P2-0" REPO2_DIR/Player-Data/Player-Data-P2-0
+    fi
 
     # MP-SPDZ specific part: compile experiment
     # only compile if not already compiled
