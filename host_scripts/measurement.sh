@@ -54,9 +54,6 @@ cd "$REPO_DIR"
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
     fi
-
-    # unconcealed verification run
-    "$REPO2_DIR"/experiments/"$EXPERIMENT"/experiment.py "$etype"
 } |& tee measurementlog"$cdomain"
 
 ####
