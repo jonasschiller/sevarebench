@@ -11,10 +11,11 @@ REPO_DIR=$(pos_get_variable repo_dir --from-global)
 REPO2_DIR=$(pos_get_variable repo2_dir --from-global)
 EXPERIMENT=$(pos_get_variable experiment --from-global)
 # SMC protocols to compile
-ipaddr="$1"
-SWAP="$2"
-network="$3"
-read -r -a nodes <<< "$4"
+protocols="$1"
+ipaddr="$2"
+SWAP="$3"
+network="$4"
+read -r -a nodes <<< "$5"
 groupsize=${#nodes[*]}
 
 
