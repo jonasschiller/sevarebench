@@ -1,3 +1,5 @@
+#Logistic Regression example from MP-SPDZ written by Mark Keller
+
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 

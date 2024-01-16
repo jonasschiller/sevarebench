@@ -1,4 +1,4 @@
-import util
+mport util
 from Compiler import types
 
 import math
@@ -8,52 +8,48 @@ n_parties = 3
 #n_threads = int(math.ceil(2 ** (int(math.log(n_inputs, 2) - 7))))
 n_bits = 64
 value_type = sint
-priceRange=10000
+priceRange=20
+smallest_z=value_type(1000)
+this_z=0
+index=value_type(0)
 
 program.set_bit_length(n_bits)
 program.set_security(40)
-
+program.use_edabit(True)
 print_ln('n_inputs = %s, n_parties = %s,' ,
          n_inputs, n_parties)
 
-
-Bid = types.getNamedTupleType('party', 'price')
-Offer = types.getNamedTupleType('party','price')
-bids = Bid.get_array(n_inputs//2, value_type)
-offers = Bid.get_array(n_inputs//2,value_type)
+Bid = types.getNamedTupleType('quantity', 'price')
+Offer = types.getNamedTupleType('quantity','price')
+bids = Bid.get_array(n_inputs//2,value_type)
+offers = Offer.get_array(n_inputs//2,value_type)
 
 for i in range(n_inputs//2):
-    bids[i] = Bid(i, value_type.get_input_from(i % n_parties) )
+    value = Bid(value_type.get_input_from(i%n_parties),value_type.get_input_from(i%n_parties))
+    bids[i] = value
 for i in range(n_inputs//2):
-    offers[i] = Offer(i,value_type.get_input_from(i% n_parties))
+    offers[i] = Offer(value_type.get_input_from(i%n_parties),value_type.get_input_from(i%n_parties))
 
-def calculateBidingPrice(bids,offers):
-    l=0 
-    smallest_z=100000
-    this_z=0
+def calculateBidingPrice(bids,offers,smallest_z):
     @for_range(priceRange)
     def loop(i):
         accumulatedSupply=0
         accumulatedDemand=0
         for offer in offers:
-            comp=offer.price <= i
-            a,b =util.cond_swap(comp,0,offer.Price)
-            accumulatedSupply= accumulatedSupply+b
+            comp=offer.price<=i
+            a=comp.if_else(0,offer.quantity)
+            accumulatedSupply= accumulatedSupply+a
         for bid in bids:
-            comp=bid.Price >= i
-            a,b=util.cond_swap(comp,0,bid.Price)
-            accumulatedDemand=accumulatedDemand+b
-        this_z= accumulatedDemand-accumulatedSupply
-        print(this_z)
-        if abs(this_z)<=abs(smallest_z):
-            l=i
-            smallest_z=this_z
-        else:
-            return i-1
-    
-    return i-1
+            comp=bid.price >= i
+            a=comp.if_else(0,bid.quantity)
+            accumulatedDemand=accumulatedDemand+a
+        this_z = accumulatedDemand-accumulatedSupply
+        cond = abs(this_z)<abs(smallest_z)
+        smallest_z.update(cond.if_else(this_z,smallest_z))
+        index.update(cond.if_else(i,index))
+    return index
 
 
-results = calculateBidingPrice(bids,offers)
+results = calculateBidingPrice(bids,offers,smallest_z)
 
-print_ln('Market Clearing Price: %s', results)
+print_ln('Market Clearing Price: %s', results.reveal())
