@@ -14,6 +14,5 @@ inputs=inputs.assign_all(1)
 @for_range(size)
 def _(i):
     inputs[i]=inputs[i]/inputs[i]
-inputs=inputs/inputs
 #verification 
 inputs[-1].reveal()
