@@ -60,10 +60,6 @@ setupExperiment() {
 	for node in "${NODES[@]}"; do
 		{ "$POS" comm laun --infile host_scripts/host_setup.sh --blocking "$node";
 		echo "      $node host setup successfull";
-		echo "    running experiment setup of $node";
-		"$POS" comm laun --blocking "$node" -- \
-			/bin/bash "$path"experiment-setup.sh "${PROTOCOLS[*]}" "$ipaddr" "$SWAP" "$NETWORK" "${NODES[*]}";
-		echo "      $node experiment setup successfull"; 
 		} &
 		PIDS+=( $! )
 		((++ipaddr))

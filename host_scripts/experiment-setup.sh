@@ -176,29 +176,30 @@ stopserver
 
 pos_upload speedtest
 
-# set up swap disk for RAM pageswapping measurements
-if [ -n "$SWAP" ] && [ -b /dev/nvme0n1 ]; then
-	echo "creating swapfile with swap size $SWAP"
-	parted -s /dev/nvme0n1 mklabel gpt
-	parted -s /dev/nvme0n1 mkpart primary ext4 0% 100%
-	mkfs.ext4 -FL swap /dev/nvme0n1
-	mkdir /swp
-	mkdir /whale
-	mount -L swap /swp
-	dd if=/dev/zero of=/swp/swp_file bs=1024 count="$SWAP"K
-	chmod 600 /swp/swp_file
-	mkswap /swp/swp_file
-	swapon /swp/swp_file
-	 # create ramdisk
-    totalram=$(free -m | grep "Mem:" | awk '{print $2}')
-	mount -t tmpfs -o size="$totalram"M swp /whale
-	# preoccupy ram and only leave 16 GiB for faster experiment runs
-	# it was observed, that more than that was never required and 
-	# falloc is slow in loops on nodes with large ram
-	ram=$((16*1024))
-	availram=$(free -m | grep "Mem:" | awk '{print $7}')
-	fallocate -l $((availram-ram))M /whale/filler
-fi
+
+# # set up swap disk for RAM pageswapping measurements
+# if [ -n "$SWAP" ] && [ -b /dev/nvme0n1 ]; then
+# 	echo "creating swapfile with swap size $SWAP"
+# 	parted -s /dev/nvme0n1 mklabel gpt
+# 	parted -s /dev/nvme0n1 mkpart primary ext4 0% 100%
+# 	mkfs.ext4 -FL swap /dev/nvme0n1
+# 	mkdir /swp
+# 	mkdir /whale
+# 	mount -L swap /swp
+# 	dd if=/dev/zero of=/swp/swp_file bs=1024 count="$SWAP"K
+# 	chmod 600 /swp/swp_file
+# 	mkswap /swp/swp_file
+# 	swapon /swp/swp_file
+# 	 # create ramdisk
+#     totalram=$(free -m | grep "Mem:" | awk '{print $2}')
+# 	mount -t tmpfs -o size="$totalram"M swp /whale
+# 	# preoccupy ram and only leave 16 GiB for faster experiment runs
+# 	# it was observed, that more than that was never required and 
+# 	# falloc is slow in loops on nodes with large ram
+# 	ram=$((16*1024))
+# 	availram=$(free -m | grep "Mem:" | awk '{print $7}')
+# 	fallocate -l $((availram-ram))M /whale/filler
+# fi
 
 #######
 #### compile libaries and prepare experiments
