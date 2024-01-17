@@ -35,9 +35,10 @@ def _(i):
         sum_value.write(sum_value+inputs[i])
 
 #Mean is calculated in clear since sum is revealed anyway
-mean_value=sum_value.reveal()/(player*size)
+sum=sum_value.reveal()
+mean_value=sum/(player*size)
 
 print_ln("Max: %s",max_value.reveal())
 print_ln("Min: %s",min_value.reveal())
-print_ln("Sum: %s",sum_value.reveal())
+print_ln("Sum: %s",sum)
 print_ln("Mean: %s",mean_value)
