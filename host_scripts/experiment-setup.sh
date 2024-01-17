@@ -105,8 +105,8 @@ elif [ "$nic1" != 0 ] && [ "$groupsize" == 3 ]; then
 	ip link set dev "$nic0" up
 	ip link set dev "$nic1" up
 
-	ip route add 10.10."$network"."${ips[0]}" dev "$nic0"
-	ip route add 10.10."$network"."${ips[1]}" dev "$nic1"
+	ip route add 10.10."$network"."${ips[0]}" via 10.10."$network"."$ipaddr" dev "$nic0"
+	ip route add 10.10."$network"."${ips[1]}" via 10.10."$network"."$ipaddr" dev "$nic1"
 
 	# to achieve high speeds, increase mtu
 	if [ "$(hostname | grep -cE "idex|meld|tinyman|yieldly|gard|goracle|zone")" -eq 1 ]; then
