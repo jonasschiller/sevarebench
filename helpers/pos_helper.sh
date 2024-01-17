@@ -70,6 +70,23 @@ setupExperiment() {
 	done
 }
 
+setupNetwork() {
+
+	echo "  setting up host(s) ${NODES[*]}"
+	ipaddr=2
+	path=/root/sevarebench/host_scripts/
+	for node in "${NODES[@]}"; do
+		{ 
+			echo "    running experiment setup of $node";
+		"$POS" comm laun --blocking "$node" -- \
+			/bin/bash "$path"experiment-setup.sh "${PROTOCOLS[*]}" "$ipaddr" "$SWAP" "$NETWORK" "${NODES[*]}";
+		echo "      $node experiment setup successfull"; 
+		} &
+		PIDS+=( $! )
+		((++ipaddr))
+	done
+}
+
 runExperiment() {
 	
 	echo "  running experiment on host(s) ${NODES[*]}"

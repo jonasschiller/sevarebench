@@ -30,6 +30,15 @@ echo "setting experiment hosts..."
 PIDS=()
 setupExperiment
 
+sleep 2 && echo " ...waiting for experiment setup"
+for pid in "${PIDS[@]}"; do
+    wait "$pid"
+done
+
+echo "setting experiment hosts network settings..."
+PIDS=()
+setupNetwork
+
 sleep 2 && echo " ...waiting for setup"
 for pid in "${PIDS[@]}"; do
     wait "$pid"
