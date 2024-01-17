@@ -48,7 +48,7 @@ nic2=$(pos_get_variable "$(hostname)"NIC2 --from-global) || nic2=0
 ips=()
 
 # four nodes direct connection topology if true
-if [ "$nic1" != 0 ] && [ "$nic2" != 0]  && [ "$groupsize" == 4 ]; then
+if [ "$nic1" != 0 ] && [ "$nic2" != 0 ]  && [ "$groupsize" == 4 ]; then
 
 	# to achieve high speeds, install ddp drivers
 	highspeed=$(hostname | grep -cE "idex|meld|tinyman|yieldly|algofi|gard|goracle|zone")
@@ -89,6 +89,8 @@ elif [ "$nic1" != 0 ] && [ "$groupsize" == 3 ]; then
 	# to achieve high speeds, install ddp drivers
 	highspeed=$(hostname | grep -cE "idex|meld|tinyman|yieldly|algofi|gard|goracle|zone")
 	[ "$highspeed" -eq 1 ] && installDriver
+
+	pos_sync
 
 	# verify that nodes array is circularly sorted
 	# this is required for the definition of this topology
