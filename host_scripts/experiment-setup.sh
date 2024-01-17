@@ -84,7 +84,7 @@ if [ "$nic1" != 0 ] && [ "$nic2" != 0]  && ["$groupsize" == 4]; then
 	fi
 
 # three nodes direct connection topology if true
-elif [ "$nic1" != 0 ] && ["$groupsize"==3]; then
+elif [ "$nic1" != 0 ] && ["$groupsize" == 3]; then
 
 	# to achieve high speeds, install ddp drivers
 	highspeed=$(hostname | grep -cE "idex|meld|tinyman|yieldly|algofi|gard|goracle|zone")

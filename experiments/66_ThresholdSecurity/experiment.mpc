@@ -1,4 +1,11 @@
-#Use the AES example for MP-SPDZ
+
+# This is the AES example for MP-SPDZ written by Marcel Keller
+# It encrypts a single plaintext with a key to a ciphertext
+# The key is expanded in the beginning and then used for all rounds
+# It can be compiled using ring and field protocols and can make use of Protocol Switching
+# The AES S-Box is implemented using the multiplicative inverse in GF(2^8)
+
+
 from copy import copy
 
 rcon_raw = [
