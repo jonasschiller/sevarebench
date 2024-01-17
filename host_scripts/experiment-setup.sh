@@ -25,13 +25,13 @@ groupsize=${#nodes[*]}
 
 # driver for Intel Network Adapter for E810 100G card
 installDriver() {
-	wget https://downloadmirror.intel.com/763930/ice-1.10.1.2.2.tar.gz
-	tar -xf ice-1.10.1.2.2.tar.gz
-	cd ice-1.10.1.2.2/src/
+	wget https://downloadmirror.intel.com/812404/ice-1.13.7.tar.gz
+	tar -xf ice-1.13.7.tar.gz
+	cd ice-1.13.7/src/
 	make install &> makelog || true
 	cd ..
 	mkdir -p /lib/firmware/updates/intel/ice/ddp/
-	cp ddp/ice-1.3.30.0.pkg /lib/firmware/updates/intel/ice/ddp/
+	cp ddp/ice-1.3.35.0.pkg /lib/firmware/updates/intel/ice/ddp/
 	modprobe -r ice
 	modprobe ice
 }
@@ -90,7 +90,7 @@ elif [ "$nic1" != 0 ] && [ "$groupsize" == 3 ]; then
 	highspeed=$(hostname | grep -cE "idex|meld|tinyman|yieldly|algofi|gard|goracle|zone")
 	[ "$highspeed" -eq 1 ] && installDriver
 
-	sleep 20
+	sleep 10
 
 	# verify that nodes array is circularly sorted
 	# this is required for the definition of this topology
@@ -149,61 +149,61 @@ pos_upload pinglog
 
 # # log link test
 # # shellcheck source=../tools/speedtest.sh
-# source "$REPO2_DIR"/tools/speedtest.sh
+source "$REPO2_DIR"/tools/speedtest.sh
 
-# {
-# 	startserver
+{
+	startserver
 
-# 	for serverip in $(seq 2 $((groupsize+1))); do
-# 		for clientip in $(seq 2 $((groupsize+1))); do
-# 			pos_sync
-# 			# skip the server
-# 			[ "$serverip" -eq "$clientip" ] && continue
-# 			# skip other clients for now
-# 			[ "$ipaddr" -ne "$clientip" ] && continue
-# 			# skip the client server roles repetitions, this is here explicitly and not 
-# 			# merged with case one so that this can be deactivated easily if wanted
-# 			[ "$serverip" -gt "$clientip" ] && continue			
+	for serverip in $(seq 2 $((groupsize+1))); do
+		for clientip in $(seq 2 $((groupsize+1))); do
+			pos_sync
+			# skip the server
+			[ "$serverip" -eq "$clientip" ] && continue
+			# skip other clients for now
+			[ "$ipaddr" -ne "$clientip" ] && continue
+			# skip the client server roles repetitions, this is here explicitly and not 
+			# merged with case one so that this can be deactivated easily if wanted
+			[ "$serverip" -gt "$clientip" ] && continue			
 
-# 			hostname="${hostname::-1}$serverip"
-# 			echo "measured speed between nodes $((serverip-1)) and $((clientip-1))"
-# 			for k in 1 10; do
-# 					threads="$k"
-# 					echo -e "\n Threads: $k"
-# 					startclient | grep total
-# 			done
-# 		done
-# 	done
-# } > speedtest
+			hostname="${hostname::-1}$serverip"
+			echo "measured speed between nodes $((serverip-1)) and $((clientip-1))"
+			for k in 1 10; do
+					threads="$k"
+					echo -e "\n Threads: $k"
+					startclient | grep total
+			done
+		done
+	done
+} > speedtest
 
-# stopserver
+stopserver
 
-# pos_upload speedtest
+pos_upload speedtest
 
 
-# # set up swap disk for RAM pageswapping measurements
-# if [ -n "$SWAP" ] && [ -b /dev/nvme0n1 ]; then
-# 	echo "creating swapfile with swap size $SWAP"
-# 	parted -s /dev/nvme0n1 mklabel gpt
-# 	parted -s /dev/nvme0n1 mkpart primary ext4 0% 100%
-# 	mkfs.ext4 -FL swap /dev/nvme0n1
-# 	mkdir /swp
-# 	mkdir /whale
-# 	mount -L swap /swp
-# 	dd if=/dev/zero of=/swp/swp_file bs=1024 count="$SWAP"K
-# 	chmod 600 /swp/swp_file
-# 	mkswap /swp/swp_file
-# 	swapon /swp/swp_file
-# 	 # create ramdisk
-#     totalram=$(free -m | grep "Mem:" | awk '{print $2}')
-# 	mount -t tmpfs -o size="$totalram"M swp /whale
-# 	# preoccupy ram and only leave 16 GiB for faster experiment runs
-# 	# it was observed, that more than that was never required and 
-# 	# falloc is slow in loops on nodes with large ram
-# 	ram=$((16*1024))
-# 	availram=$(free -m | grep "Mem:" | awk '{print $7}')
-# 	fallocate -l $((availram-ram))M /whale/filler
-# fi
+# set up swap disk for RAM pageswapping measurements
+if [ -n "$SWAP" ] && [ -b /dev/nvme0n1 ]; then
+	echo "creating swapfile with swap size $SWAP"
+	parted -s /dev/nvme0n1 mklabel gpt
+	parted -s /dev/nvme0n1 mkpart primary ext4 0% 100%
+	mkfs.ext4 -FL swap /dev/nvme0n1
+	mkdir /swp
+	mkdir /whale
+	mount -L swap /swp
+	dd if=/dev/zero of=/swp/swp_file bs=1024 count="$SWAP"K
+	chmod 600 /swp/swp_file
+	mkswap /swp/swp_file
+	swapon /swp/swp_file
+	 # create ramdisk
+    totalram=$(free -m | grep "Mem:" | awk '{print $2}')
+	mount -t tmpfs -o size="$totalram"M swp /whale
+	# preoccupy ram and only leave 16 GiB for faster experiment runs
+	# it was observed, that more than that was never required and 
+	# falloc is slow in loops on nodes with large ram
+	ram=$((16*1024))
+	availram=$(free -m | grep "Mem:" | awk '{print $7}')
+	fallocate -l $((availram-ram))M /whale/filler
+fi
 
 #######
 #### compile libaries and prepare experiments
