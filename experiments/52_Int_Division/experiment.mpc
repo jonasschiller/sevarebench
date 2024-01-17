@@ -13,6 +13,6 @@ inputs=sint.Array(size)
 inputs=inputs.assign_all(1)
 @for_range(size)
 def _(i):
-    inputs[i]=inputs[i]/inputs[i]
+    inputs[i]=inputs[i].int_div(inputs[i])
 #verification 
 inputs[-1].reveal()

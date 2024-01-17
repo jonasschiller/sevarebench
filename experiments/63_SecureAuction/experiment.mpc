@@ -1,11 +1,10 @@
-mport util
+import util
 from Compiler import types
 
 import math
 n_inputs = 120
 
 n_parties = 3
-#n_threads = int(math.ceil(2 ** (int(math.log(n_inputs, 2) - 7))))
 n_bits = 64
 value_type = sint
 priceRange=20
