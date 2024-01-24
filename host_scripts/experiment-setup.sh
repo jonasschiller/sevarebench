@@ -127,8 +127,6 @@ else
 		[ "$ipaddr" -ne "$i" ] && ips+=( "$i" )
 		ip route add 10.10."$network"."${ips[0]}" via 10.10."$network"."$ipaddr" dev "$nic0"
 	done
-	
-
 fi
 
 # wait for others to finish setup
