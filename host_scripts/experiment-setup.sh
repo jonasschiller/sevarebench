@@ -121,12 +121,12 @@ else
 	# support any groupsizes
 	# store other participants ips
 
-	ip addr add 10.10."$network"."$ipaddr"/24 dev "$nic0"
-	ip link set dev "$nic0" up
 	for i in $(seq 2 $((groupsize+1))); do
 		[ "$ipaddr" -ne "$i" ] && ips+=( "$i" )
-		ip route add 10.10."$network"."${ips[0]}" via 10.10."$network"."$ipaddr" dev "$nic0"
 	done
+
+	ip addr add 10.10."$network"."$ipaddr"/24 dev "$nic0"
+	ip link set dev "$nic0" up
 fi
 
 # wait for others to finish setup
