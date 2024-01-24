@@ -87,8 +87,8 @@ exportExperimentResults() {
                 binfsize=$(grep "Binary file size" "$compileinfo" | tail -n 1 | cut -d ' ' -f 1)
                 [ -n "$compilemaxRAMused" ] && compilemaxRAMused="$((compilemaxRAMused/1024))"
                 runtimeint=$(grep "Time =" "$runtimeinfo" | awk '{print $3}')
-                runtimeext=$(grep "Elapsed wall clock" "$runtimeinfo" | cut -d ' ' -f 1)
-                maxRAMused=$(grep "Maximum resident" "$runtimeinfo" | cut -d ' ' -f 1)
+                runtimeext=$(grep "Elapsed (wall clock)" "$runtimeinfo" | cut -d ':' -f 2 | tr -d ' ')
+                maxRAMused=$(grep "Maximum resident" "$runtimeinfo" | cut -d ':' -f 2 | tr -d ' ' )
                 [ -n "$maxRAMused" ] && maxRAMused="$((maxRAMused/1024))"
                 jobCPU=$(grep "CPU this job" "$runtimeinfo" | cut -d '%' -f 1)
                 maxRAMused=${maxRAMused:-NA}
