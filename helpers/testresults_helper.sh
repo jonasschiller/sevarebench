@@ -70,6 +70,10 @@ exportExperimentResults() {
                 # get pos filepath of the measurements for the current loop
                 compileinfo=$(find "$resultpath" -name "measurementlog${cdomain}_run*$i" -print -quit)
                 runtimeinfo=$(find "$resultpath" -name "testresults$cdomain${protocol}_run*$i" -print -quit)
+                #If no loop is run, the file is named differently
+                if [ ! -f "$runtimeinfo" ]; then
+                runtimeinfo=$(find "$resultpath" -name "testresults$cdomain${protocol}" -print -quit)
+                fi
                 if [ ! -f "$runtimeinfo" ] || [ ! -f "$compileinfo" ]; then
                     styleOrange "    Skip - File not found error: runtimeinfo or compileinfo"
                     continue 2
