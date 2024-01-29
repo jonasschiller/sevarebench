@@ -10,7 +10,7 @@ player = 3
 datatype = sint
 
 inputs=sint.Array(size)
-inputs=inputs.assign_all(0)
+inputs=inputs.assign_all(0).get_vector()
 inputs=inputs*inputs
 #verification 
 inputs[-1].reveal()
