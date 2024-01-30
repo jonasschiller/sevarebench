@@ -11,9 +11,7 @@ player = 3
 datatype = sintbit
 #Test
 inputs=datatype.Array(size)
-inputs=inputs.assign_all(1)
-@for_range(size)
-def _(i):
-    inputs[i]=inputs[i]&inputs[i]
+inputs=inputs.assign_all(1).get_vector()
+inputs=inputs&inputs
 #verification 
 inputs[-1].reveal()

@@ -57,7 +57,7 @@ exportExperimentResults() {
             echo "  exporting $protocol"
             # while we find a next loop info file do
             while [ -n "$loopinfo" ]; do
-                loopvalues=""
+                loopvalues="" 
                 # extract loop var values
                 for value in $(jq -r 'values[]' "$loopinfo"); do
                     loopvalues+="$value;"

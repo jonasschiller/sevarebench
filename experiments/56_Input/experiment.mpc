@@ -1,0 +1,10 @@
+program.bit_length = 32
+size = int(program.args[1])
+player = 3
+datatype = sint
+base = 0
+
+#input data into the computation
+vector = [0] * 1000000
+datatype.input_tensor_via(0, vector)
+
