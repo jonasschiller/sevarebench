@@ -17,7 +17,7 @@ EXPERIMENT=$(pos_get_variable experiment --from-global)
 runflags=$(pos_get_variable runflags --from-global)
 [ "$runflags" == None ] && runflags=""
 size=$(pos_get_variable input_size --from-loop)
-timerf="%M (Maximum resident set size in kbytes)\n%e (Elapsed wall clock time in seconds)\n%P (Percent of CPU this job got)"
+timerf="%M (Maximum resident set size in kbytes)\n%e (Elapsed wall clock time in seconds)\n%P (Percent of CPU this job got)\n%S (System time in seconds)"
 player=$1
 cdomain=$2
 environ=""
