@@ -91,7 +91,7 @@ exportExperimentResults() {
                 maxRAMused=$(grep "Maximum resident" "$runtimeinfo" | tail -n 1 | cut -d ' ' -f 1 )
                 systime=$(grep "System time" "$runtimeinfo" | tail -n 1 | cut -d ' ' -f 1 )
                 [ -n "$maxRAMused" ] && maxRAMused="$((maxRAMused/1024))"
-                jobCPU=$(grep "CPU this job" "$runtimeinfo" | cut -d '%' -f 1)
+                jobCPU=$(grep "CPU this job" "$runtimeinfo" | awk '{print $1}')
                 maxRAMused=${maxRAMused:-NA}
                 compilemaxRAMused=${compilemaxRAMused:-NA}
 
