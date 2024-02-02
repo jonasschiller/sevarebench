@@ -32,8 +32,8 @@ checkConnection() {
 
 checkConnection "mirror.lrz.de"
 apt update
-apt install -y automake build-essential cmake git libboost-dev libboost-thread-dev \
-    libntl-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm linux-cpupower \
+apt install -y automake build-essential clang cmake git libboost-dev libboost-thread-dev \
+    libntl-dev libgmp-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm linux-cpupower \
     python3-pip time parted iperf3 software-properties-common
 pip3 install -U numpy
 checkConnection "github.com"

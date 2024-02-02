@@ -238,7 +238,8 @@ maxcorescpu=$(($(nproc --all)-1))
 # take the minimum of the two options
 maxjobs=$(( maxcoresram < maxcorescpu ? maxcoresram : maxcorescpu ))
 
-# get required packages
+# get required 
+make -j "$maxjobs" setup &> makelog
 make -j "$maxjobs" linux-machine-setup &> makelog
 
 # compiling fails randomly, need to repeat a few times
@@ -248,7 +249,7 @@ success=false
 while [ $i -lt $maxtry ] && ! $success; do
 	success=true
 	echo "____try $i" >> makelog
-	make -j "$maxjobs" $protocols &>> makelog || success=false
+	make -j "$maxjobs"  &>> makelog || success=false
  	echo makelog
 	((++i))
 	sleep 1
