@@ -239,7 +239,7 @@ maxcorescpu=$(($(nproc --all)-1))
 maxjobs=$(( maxcoresram < maxcorescpu ? maxcoresram : maxcorescpu ))
 
 # get required packages
-make -j "$maxjobs" mpir linux-machine-setup &> makelog
+make -j "$maxjobs" linux-machine-setup &> makelog
 
 # compiling fails randomly, need to repeat a few times
 i=0
