@@ -47,6 +47,6 @@ cp "$REPO2_DIR"/helpers/htoprc ~/.config/htop/
 cd "$REPO_DIR"
 
 # use a custom state of the MP-SPDZ repo
-git checkout "$REPO_COMMIT"
+#git checkout "$REPO_COMMIT"
 
 echo "global setup successful "
