@@ -8,3 +8,6 @@ inputs=sint.Array(size)
 inputs=inputs.assign_all(base)
 #verification 
 inputs.reveal()
+
+
+
