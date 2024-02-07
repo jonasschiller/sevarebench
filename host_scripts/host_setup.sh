@@ -37,7 +37,7 @@ apt install -y automake build-essential clang cmake git libboost-dev libboost-th
     python3-pip time parted iperf3 software-properties-common
 pip3 install -U numpy
 checkConnection "github.com"
-git clone "$REPO" "$REPO_DIR"
+git clone --recurse-submodules "$REPO" "$REPO_DIR"
 git clone "$REPO2" "$REPO2_DIR"
 
 # load custom htop config

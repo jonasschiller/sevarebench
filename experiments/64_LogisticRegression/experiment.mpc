@@ -1,28 +1,40 @@
-#Logistic Regression example from MP-SPDZ written by Mark Keller
-
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-
-#load the dataset from sklearn undistributed at the moment, would need to be artifically split 
-X = sfix.Tensor([100,10])
-y = sfix.Tensor([100])
-X_train = sfix.Tensor([80,10])
-Y_train = sfix.Tensor([80])
-X_test = sfix.Tensor([20,10])
-Y_test = sfix.Tensor([20])
-
-X.input_from(0)
-y.input_from(1)
-
-X_train=X[0:80]
-y_train=y[0:80]
-X_test=X[80:100]
-y_test=y[80:100]
-
 from Compiler import ml
 
-log = ml.SGDLogistic(100, 1)
+debug = False
 
-log.fit(X_train, y_train)
-results=(log.predict(X_test)- y_test).reveal()
-#Find method to reveal the accuracy of the model
+program.options_from_args()
+
+sfix.set_precision(16, 31)
+cfix.set_precision(16, 31)
+
+dim = int(program.args[1])
+batch = int(program.args[2])
+ml.Layer.back_batch_size = batch
+
+try:
+   n_iterations = int(program.args[3])
+except:
+   n_iterations = 1
+
+try:
+   ml.set_n_threads(int(program.args[4]))
+except:
+   ml.set_n_threads(None)
+
+N = batch * n_iterations
+
+print('run 1 epoch of logistic regression with %d examples' % (N))
+
+dense = ml.Dense(N, dim, 1)
+sigmoid = ml.Output(N, debug=debug, approx='approx' in program.args)
+
+for x in dense.X, sigmoid.Y:
+   x.assign_all(0)
+
+sgd = ml.SGD([dense, sigmoid], 1, debug=debug, report_loss=False)
+sgd.reset()
+
+if not ('forward' in program.args or 'backward' in program.args):
+   sgd.run(batch_size=batch)
+
+sgd.forward(N=batch)

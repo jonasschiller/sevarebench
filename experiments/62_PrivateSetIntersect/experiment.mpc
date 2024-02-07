@@ -1,6 +1,7 @@
 """
-Set intersect, inspired by Keller
-Adapted by Jacob Obrman
+For Field Protocols use -Y
+For Ring Protocols use -Z and -R 64
+For Binary Protocols use -B 32
 """
 
 from util import if_else
@@ -16,15 +17,14 @@ datatype = sint
 a = Array(n, datatype)
 b = Array(n, datatype)
 
-for i in range(n):
-	a[i] = datatype.get_input_from(0)
-	b[i] = datatype.get_input_from(1)
+a.assign_all(1)
+b.assign_all(1)
 
 intersection = Array(n, sint)
 
-@for_range(n)
+@for_range_opt(n)
 def _(i):
-	@for_range(n)
+	@for_range_opt(n)
 	def _(j):
 		match = a[i] == b[j]
 		intersection[i] = if_else(match, a[i], intersection[i]) 

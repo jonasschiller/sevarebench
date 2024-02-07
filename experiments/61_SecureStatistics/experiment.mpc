@@ -1,7 +1,9 @@
 
 """
+Compile with -Y for Field Protocols
+Compile with -Z (number of players) and -R 64 
 Secure Statistics
-Here the parties each have a vector of size n. They want to compute the max, min, sum and mean of the values in the vector. 
+Here the parties each have a vector of size n. They want to compute the max, min, sum and mean of the values in the vector.
 The mean is calculated in the clear since the sum is revealed anyway.
 First each party provides their respective input and the values are secret_shared.
 Then in one loop the max, min and sum are calculated.
@@ -11,34 +13,36 @@ import operator
 from Compiler.types import sint, Array, MemValue
 from Compiler.library import print_ln, for_range
 
+
 program.bit_length = 32
 size = int(program.args[1])
 player = int(program.args[2])
-etype= int(program.args[3])
-
 input_size=size
 datatype = sint
 
 inputs=Array(input_size,datatype)
 #Use the same loop to calculate the min, max and sum of the values
-max_value=MemValue(sint(0))
-min_value=MemValue(sint(0))
-sum_value=MemValue(sint(0))
-
-for i in range(input_size):
-            inputs[i] = datatype.get_input_from(0)
-
+max_value=Array(1,sint)
+min_value=Array(1,sint)
+sum_value=Array(1,sint)
+mean_value=Array(1,sint)
+total=Array(1,sint)
+inputs.assign_all(1)
+total[0]=input_size
+max_value[0]=inputs[0]
+min_value[0]=inputs[0]
+sum_value[0]=0
 @for_range(input_size)
 def _(i):
-        max_value.write(inputs[i].max(max_value))
-        min_value.write(inputs[i].max(min_value))
-        sum_value.write(sum_value+inputs[i])
+        max_value[0]=(inputs[i].max(max_value[0]))
+        min_value[0]=(inputs[i].max(min_value[0]))
+        sum_value[0]=(sum_value[0]+inputs[i])
 
 #Mean is calculated in clear since sum is revealed anyway
-sum=sum_value.reveal()
-mean_value=sum/(player*size)
+mean_value[0]=(sum_value[0]/(total[0]))
 
-print_ln("Max: %s",max_value.reveal())
-print_ln("Min: %s",min_value.reveal())
-print_ln("Sum: %s",sum)
-print_ln("Mean: %s",mean_value)
+print_ln("Max: %s",max_value[0].reveal())
+print_ln("Min: %s",min_value[0].reveal())
+print_ln("Sum: %s",sum_value[0].reveal())
+print_ln("Mean: %s",mean_value[0].reveal())
+

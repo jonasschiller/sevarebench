@@ -1,47 +1,48 @@
+# Secure Double Auction
+# For Field Protocols use -Y
+# For Ring Protocols use -Z and -R 64
+# For Binary Protocols use -Y -B 32
+
 import util
 from Compiler import types
 
 import math
-n_inputs = 120
+n_inputs = int(program.args[1])
+priceRange= int(program.args[2])
+n_parties = int(program.args[3])
 
-n_parties = 3
-n_bits = 64
+n_bits = 32
 value_type = sint
-priceRange=20
-smallest_z=value_type(1000)
+smallest_z=value_type(10000)
 this_z=0
 index=value_type(0)
 
 program.set_bit_length(n_bits)
 program.set_security(40)
-program.use_edabit(True)
-print_ln('n_inputs = %s, n_parties = %s,' ,
-         n_inputs, n_parties)
 
-Bid = types.getNamedTupleType('quantity', 'price')
-Offer = types.getNamedTupleType('quantity','price')
-bids = Bid.get_array(n_inputs//2,value_type)
-offers = Offer.get_array(n_inputs//2,value_type)
 
-for i in range(n_inputs//2):
-    value = Bid(value_type.get_input_from(i%n_parties),value_type.get_input_from(i%n_parties))
-    bids[i] = value
-for i in range(n_inputs//2):
-    offers[i] = Offer(value_type.get_input_from(i%n_parties),value_type.get_input_from(i%n_parties))
+bids_price = value_type.Array(n_inputs)
+bids_price.assign_all(5)
+bids_quantity = value_type.Array(n_inputs)
+bids_quantity.assign_all(5)
+offers_price = value_type.Array(n_inputs)
+offers_price.assign_all(5)
+offers_quantity = value_type.Array(n_inputs)
+offers_quantity.assign_all(5)
 
-def calculateBidingPrice(bids,offers,smallest_z):
-    @for_range(priceRange)
+def calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_quantity,>
+    @for_range_opt(priceRange)
     def loop(i):
         accumulatedSupply=0
         accumulatedDemand=0
-        for offer in offers:
-            comp=offer.price<=i
-            a=comp.if_else(0,offer.quantity)
-            accumulatedSupply= accumulatedSupply+a
-        for bid in bids:
-            comp=bid.price >= i
-            a=comp.if_else(0,bid.quantity)
-            accumulatedDemand=accumulatedDemand+a
+        comp=offers_price.get_vector()<=i
+        a=comp.if_else(0,offers_quantity.get_vector())
+        for t in a:
+            accumulatedSupply= accumulatedSupply+t
+        comp=bids_price.get_vector()>=i
+        a=comp.if_else(0,bids_quantity.get_vector())
+        for t in a:
+            accumulatedSupply= accumulatedSupply+t
         this_z = accumulatedDemand-accumulatedSupply
         cond = abs(this_z)<abs(smallest_z)
         smallest_z.update(cond.if_else(this_z,smallest_z))
@@ -49,6 +50,7 @@ def calculateBidingPrice(bids,offers,smallest_z):
     return index
 
 
-results = calculateBidingPrice(bids,offers,smallest_z)
+results = calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_qua>
 
 print_ln('Market Clearing Price: %s', results.reveal())
+
