@@ -1,0 +1,90 @@
+#This program loads a pre-trained model and performs inference on the test set.
+#The model is trained in clear by one party which then holds the weights.
+#The other party provides the inputs
+#It uses the LeNet Architecture
+program.options_from_args()
+
+from compiler import ml
+import torchvision
+import torch
+import torch.nn as nn
+
+batch_size = int(program.args[1])
+
+#Set the architecture of the model and determine the necessary layers
+net = nn.Sequential(
+    #Block 1
+    nn.Conv2d(1, 6, 5, padding=(5 - 1) // 2),
+    nn.ReLU(),
+    nn.AvgPool2d(2),
+    nn.Conv2d(6, 16, 5,padding=(5 - 1) // 2),
+    nn.ReLU(),
+    nn.AvgPool2d(2),
+    nn.Flatten(),
+    nn.Linear(16 * 7 * 7, 120),
+    nn.ReLU(),
+    nn.Linear(120, 84),
+    nn.ReLU(),
+    nn.Linear(84, 10)
+)
+
+
+graph = ml.Optimizer()
+#parameters are model, input size, batch size, input_via
+layers = ml.layers_from_torch(net, [1,28,28], batch_size)
+graph.layers = layers
+
+
+
+#Load the weights for layer 0
+hw=np.zeros((6,1,5,5))
+hb=np.zeros(6)
+w=sfix.Tensor([6,1,5,5])
+b=sfix.Tensor([6])
+w.assign(hw)
+b.assign(hb)
+layers[0].W=w
+layers[0].B=b
+#Load the weights for layer 3
+hw=np.zeros((16,6,5,5))
+hb=np.zeros(16)
+w=sfix.Tensor([16,6,5,5])
+b=sfix.Tensor([16])
+w.assign(hw)
+b.assign(hb)
+layers[3].W=w
+layers[3].B=b
+#Load the weights for layer 8
+hw=np.zeros((16*7*7,120))
+hb=np.zeros(120)
+w=sfix.Tensor([16*7*7,120])
+b=sfix.Tensor([120])
+w.assign(hw)
+b.assign(hb)
+layers[7].W=w
+layers[7].B=b
+#Load the weights for layer 10
+hw=np.zeros((120,84))
+hb=np.zeros(84)
+w=sfix.Tensor([120,84])
+b=sfix.Tensor([84])
+w.assign(hw)
+b.assign(hb)
+layers[9].W=w
+layers[9].B=b
+#Load the weights for layer 12
+hw=np.zeros((84,10))
+hb=np.zeros(10)
+w=sfix.Tensor([84,10])
+b=sfix.Tensor([10])
+w.assign(hw)
+b.assign(hb)
+layers[11].W=w
+layers[11].B=b
+#Load the inputs from player 0
+array=np.zeros((batch_size,1,28,28))
+input=sfix.Tensor([batch_size,1,28,28])
+input.assign(array)
+layers[0].X=input
+graph.forward(1)
+res=layers[-1].Y

@@ -1,6 +1,7 @@
 #This program loads a pre-trained model and performs inference on the test set.
 #The model is trained in clear by one party which then holds the weights.
 #The other party provides the inputs
+#It uses the LeNet Architecture
 program.options_from_args()
 
 from compiler import ml
@@ -8,14 +9,16 @@ import torchvision
 import torch
 import torch.nn as nn
 
+batch_size = int(program.args[1])
+
 #Set the architecture of the model and determine the necessary layers
 net = nn.Sequential(
     nn.Conv2d(1, 6, 5),
     nn.ReLU(),
-    nn.MaxPool2d(2),
+    nn.AvgPool2d(2),
     nn.Conv2d(6, 16, 5),
     nn.ReLU(),
-    nn.MaxPool2d(2),
+    nn.AvgPool2d(2),
     nn.Flatten(),
     nn.Linear(16 * 4 * 4, 120),
     nn.ReLU(),
@@ -23,13 +26,17 @@ net = nn.Sequential(
     nn.ReLU(),
     nn.Linear(84, 10)
 )
+state_dict = torch.load('Program/Source/lenet5.pth')
+new_state_dict = {}
+for key1, key2 in zip(state_dict.keys(), net.state_dict().keys()):
+    new_state_dict[key2] = state_dict[key1]
 
-
+net.load_state_dict(new_state_dict)
 graph = ml.Optimizer()
-#parameters are model, input size, batch size, input_via
-layers = ml.layers_from_torch(net, [28,28], 1, input_via=1)
 graph.layers = layers
+
 #Load the inputs from player 0
-layers[0].X.input_from(0)
+layers[0].X.input_tensor_via(0, [batch_size, 1, 28, 28])
+
 graph.forward(1)
 res = layers[-1].Y
