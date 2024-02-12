@@ -35,7 +35,7 @@ apt update
 apt install -y automake build-essential clang cmake git libboost-dev libboost-thread-dev \
     libntl-dev libgmp-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm linux-cpupower \
     python3-pip time parted iperf3 software-properties-common
-pip3 install -U numpy
+pip3 install -U numpy torch
 checkConnection "github.com"
 git clone --recurse-submodules "$REPO" "$REPO_DIR"
 git clone "$REPO2" "$REPO2_DIR"

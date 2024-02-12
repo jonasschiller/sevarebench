@@ -5,7 +5,6 @@
 program.options_from_args()
 program.set_bit_length(32)
 from Compiler import ml
-import torchvision
 import torch
 import torch.nn as nn
 import numpy as np

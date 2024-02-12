@@ -32,7 +32,7 @@ batch = int(program.args[2])
 ml.Layer.back_batch_size = batch
 
 try:
-   n_iterations = int(program.args[1])
+   n_iterations = int(program.args[3])
 except:
    n_iterations = 1
 
