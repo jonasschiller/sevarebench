@@ -71,7 +71,12 @@ case " ${types[*]} " in
         # check whether to manipulate a combination
         case " ${types[*]} " in
             *" LATENCIES "*)
+            case " ${types[*]} " in
+                *" PACKETDROPS "*)
+                    setAllParameters;;
+                *)
                 setLatencyBandwidth;;
+            esac;;                 
             *" PACKETDROPS "*) # a.k.a. packet loss
                 setBandwidthPacketdrop;;
             *)
