@@ -36,13 +36,6 @@ net = nn.Sequential(
 
 ml.set_n_threads(8)
 
-
-#Load the parameters of the model
-state_dict = torch.load('./Programs/Source/lenet5.pth')
-new_state_dict = {}
-for key1, key2 in zip(state_dict.keys(), net.state_dict().keys()):
-    new_state_dict[key2] = state_dict[key1]
-net.load_state_dict(new_state_dict)
 #set the layers of the graph
 layers=ml.layers_from_torch(net,[batch_size,28,28],batch_size,input_via=0)
 graph=ml.Optimizer(layers)
