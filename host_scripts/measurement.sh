@@ -58,6 +58,11 @@ cd "$REPO_DIR"
 # shellcheck source=../host_scripts/manipulate.sh
 source "$REPO2_DIR"/host_scripts/manipulate.sh
 
+if [[ "${types[*]}" == *" LATENCY=0 "* ]]; then
+    types=("${types[@]/LATENCY}")
+fi
+
+
 case " ${types[*]} " in
     *" CPUS "*)
         limitCPUs;;&
