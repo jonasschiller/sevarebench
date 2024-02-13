@@ -96,11 +96,12 @@ tc qdisc add dev "$NIC0" root handle 1:0 netem loss "$packetdrop"%
 # Add child qdisc with bandwidth control
 tc qdisc add dev "$NIC0" parent 1:0 handle 10: tbf rate "$bandwidth"mbit burst 50kb limit 50kb
 [ "$NIC1" != 0 ] && tc qdisc add dev "$NIC1" parent 1:0 handle 10: tbf rate "$bandwidth"mbit burst 50kb limit 50kb
-
 # Add another child qdisc with latency control
-tc qdisc add dev "$NIC0" parent 10:1 handle 20: netem delay "$latency"ms
-[ "$NIC1" != 0 ] && tc qdisc add dev "$NIC1" parent 10:1 handle 20: netem delay "$latency"ms 
-    return 0
+if [ "$latency" -ne 0 ]; then
+    tc qdisc add dev "$NIC0" parent 10:1 handle 20: netem delay "$latency"ms
+    [ "$NIC1" != 0 ] && tc qdisc add dev "$NIC1" parent 10:1 handle 20: netem delay "$latency"ms 
+fi
+return 0
 }
 
 setLatencyBandwidth() {
