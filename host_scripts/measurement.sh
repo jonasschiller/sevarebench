@@ -37,11 +37,11 @@ cd "$REPO_DIR"
     echo "player: $player, cdomain: $cdomain, protocols: ${protocols[*]}, types: ${types[*]}"
 
     # experiment specific part: load the input from the experiment into the Player Data folder of MP-SPDZ
-    if [ -f "$EXPERIMENT/lenet5.pth" ]; then
-        cp "$EXPERIMENT/lenet5.pth" REPO2_DIR/Programs/Source/lenet5.pth
+    if [ -f "$REPO2_DIR/experiments/$EXPERIMENT/lenet5.pth" ]; then
+        cp "$REPO2_DIR/experiments/$EXPERIMENT/lenet5.pth" "REPO_DIR/Programs/Source/lenet5.pth"
     fi
-    if [-f "$EXPERIMENT/VGGCifar.pth"]; then
-        cp "$EXPERIMENT/VGGCifar.pth" REPO2_DIR/Programs/Source/VGGCifar.pth
+    if [-f "$REPO2_DIR/experiments/$EXPERIMENT/VGGCifar.pth"]; then
+        cp "$REPO2_DIR/experiments/$EXPERIMENT/VGGCifar.pth" "REPO_DIR/Programs/Source/VGGCifar.pth"
     fi
 
     # MP-SPDZ specific part: compile experiment
