@@ -32,21 +32,20 @@ checkConnection() {
 
 checkConnection "mirror.lrz.de"
 apt update
-apt install -y automake build-essential clang cmake git libboost-dev libboost-thread-dev \
-    libntl-dev libgmp-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm linux-cpupower \
+apt install -y automake git libboost-dev libboost-thread-dev \
+    libntl-dev libgmp-dev libsodium-dev libssl-dev libtool m4 python3 texinfo yasm \
     python3-pip time parted iperf3 software-properties-common
 pip3 install -U numpy torch
 checkConnection "github.com"
-git clone --recurse-submodules "$REPO" "$REPO_DIR"
 git clone "$REPO2" "$REPO2_DIR"
 
 # load custom htop config
 mkdir -p .config/htop
 cp "$REPO2_DIR"/helpers/htoprc ~/.config/htop/
-
+wget https://github.com/data61/MP-SPDZ/releases/download/v0.3.8/mp-spdz-0.3.8.tar.xz
+tar -xf mp-spdz-0.3.8.tar.xz 
+mv mp-spdz-0.3.8 "$REPO_DIR"
 cd "$REPO_DIR"
-
-# use a custom state of the MP-SPDZ repo
-#git checkout "$REPO_COMMIT"
+./Scripts/tldr.sh
 
 echo "global setup successful "
