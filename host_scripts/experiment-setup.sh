@@ -213,6 +213,13 @@ protocols="${protocols//yaoO/yao}"
 
 cp "$REPO2_DIR"/experiments/"$EXPERIMENT"/experiment.mpc \
 	"$REPO_DIR"/Programs/Source/
+# experiment specific part: load the input from the experiment into the Player Data folder of MP-SPDZ
+if [ -f "$REPO2_DIR"/experiments/"$EXPERIMENT"/lenet5.pth ]; then
+    cp "$REPO2_DIR"/experiments/"$EXPERIMENT"/lenet5.pth "$REPO_DIR"/Programs/Source/
+fi
+if [-f "$REPO2_DIR"/experiments/"$EXPERIMENT"/VGGCifar.pth]; then
+    cp "$REPO2_DIR/experiments/$EXPERIMENT/VGGCifar.pth" "$REPO_DIR"/Programs/Source/
+fi
 chmod +x "$REPO2_DIR"/helpers/* "$REPO2_DIR"/experiments/"$EXPERIMENT"/*
 cd "$REPO_DIR"
 
