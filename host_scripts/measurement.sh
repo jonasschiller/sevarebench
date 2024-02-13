@@ -36,14 +36,6 @@ cd "$REPO_DIR"
 {
     echo "player: $player, cdomain: $cdomain, protocols: ${protocols[*]}, types: ${types[*]}"
 
-    # experiment specific part: load the input from the experiment into the Player Data folder of MP-SPDZ
-    if [ -f "$REPO2_DIR/experiments/$EXPERIMENT/lenet5.pth" ]; then
-        cp "$REPO2_DIR/experiments/$EXPERIMENT/lenet5.pth" "REPO_DIR/Programs/Source/lenet5.pth"
-    fi
-    if [-f "$REPO2_DIR/experiments/$EXPERIMENT/VGGCifar.pth"]; then
-        cp "$REPO2_DIR/experiments/$EXPERIMENT/VGGCifar.pth" "REPO_DIR/Programs/Source/VGGCifar.pth"
-    fi
-
     # MP-SPDZ specific part: compile experiment
     # only compile if not already compiled
     binarypath="Programs/Bytecode/experiment-$size-$partysize-$etype-0.bc"
