@@ -39,7 +39,7 @@ cd "$REPO_DIR"
     
     # MP-SPDZ specific part: compile experiment
     # only compile if not already compiled
-    if [ $features -eq 0]; then
+    if [ $features -eq 0 ]; then
         binarypath="Programs/Bytecode/experiment-$size-$partysize-$etype-0.bc"
         if [ ! -f "$binarypath" ]; then
         case "$cdomain" in
@@ -51,7 +51,7 @@ cd "$REPO_DIR"
                 /bin/time -f "$timerf" ./compile.py -Y experiment "$size" "$partysize" "$etype";;
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
-    fi
+        fi
     else
         binarypath="Programs/Bytecode/experiment-$size-$features-$partysize-$etype-0.bc"
         if [ ! -f "$binarypath" ]; then
@@ -64,7 +64,7 @@ cd "$REPO_DIR"
                 /bin/time -f "$timerf" ./compile.py -Y experiment "$size" "$features" "$partysize" "$etype";;
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
-    fi
+        fi
     fi
     
 } |& tee measurementlog"$cdomain"
@@ -149,7 +149,7 @@ for protocol in "${protocols[@]}"; do
         runflags="${runflags//-u/}"
     fi
 
-    if [$features -eq 0]; then
+    if [ $features -eq 0 ]; then
         $skip ||
         /bin/time -f "$timerf" ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
             experiment-"$size"-"$partysize"-"$etype" &> "$log" || success=false
