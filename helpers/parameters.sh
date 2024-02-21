@@ -138,7 +138,7 @@ setParameters() {
                     -- "$@") || { error $LINENO "${FUNCNAME[0]}(): getopt failed parsing options"; }
 
     eval set -- "${PARSED}"
-
+    echo "Test"
     while [ $# -gt 1 ]; do
         #echo "parsing arg: $1 $2"
         case "$1" in
@@ -234,7 +234,7 @@ setParameters() {
         esac
         shift || true      # skip to next option-argument pair
     done
-
+    echo "Test2"
     # valid experiment check
     if [ -f experiments/"$EXPERIMENT"/parameters.yml ]; then
         # get experiment node count from experiment parameters file
