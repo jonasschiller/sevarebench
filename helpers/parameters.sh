@@ -138,7 +138,6 @@ setParameters() {
                     -- "$@") || { error $LINENO "${FUNCNAME[0]}(): getopt failed parsing options"; }
 
     eval set -- "${PARSED}"
-    echo "Test"
     while [ $# -gt 1 ]; do
         #echo "parsing arg: $1 $2"
         case "$1" in
@@ -322,7 +321,6 @@ setParameters() {
         parameters="${INPUTS2[*]}"
         echo "input2_size: [${parameters// /, }]" >> "$loopvarpath"
     fi
-    echo "Test3"
     parameters="${INPUTS[*]}"
     echo "input_size: [${parameters// /, }]" >> "$loopvarpath"
 
