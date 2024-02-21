@@ -22,27 +22,13 @@ datatype = sint
 
 inputs=Array(input_size,datatype)
 #Use the same loop to calculate the min, max and sum of the values
-max_value=Array(1,sint)
 min_value=Array(1,sint)
-sum_value=Array(1,sint)
-mean_value=Array(1,sint)
-total=Array(1,sint)
 inputs.assign_all(1)
-total[0]=input_size
-max_value[0]=inputs[0]
 min_value[0]=inputs[0]
-sum_value[0]=0
-@for_range(input_size)
+@for_range_opt(input_size)
 def _(i):
-        max_value[0]=(inputs[i].max(max_value[0]))
-        min_value[0]=(inputs[i].max(min_value[0]))
-        sum_value[0]=(sum_value[0]+inputs[i])
+        min_value[0]=(inputs[i].min(min_value[0]))
 
-#Mean is calculated in clear since sum is revealed anyway
-mean_value[0]=(sum_value[0]/(total[0]))
-
-print_ln("Max: %s",max_value[0].reveal())
 print_ln("Min: %s",min_value[0].reveal())
-print_ln("Sum: %s",sum_value[0].reveal())
-print_ln("Mean: %s",mean_value[0].reveal())
+
 
