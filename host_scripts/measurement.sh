@@ -17,7 +17,7 @@ EXPERIMENT=$(pos_get_variable experiment --from-global)
 runflags=$(pos_get_variable runflags --from-global)
 [ "$runflags" == None ] && runflags=""
 size=$(pos_get_variable input_size --from-loop)
-features= $(pos_get_variable input2_size --from-loop) || features=-1
+features=$(pos_get_variable input2_size --from-loop) || features=0
 timerf="%M (Maximum resident set size in kbytes)\n%e (Elapsed wall clock time in seconds)\n%P (Percent of CPU this job got)\n%S (System time in seconds)"
 player=$1
 cdomain=$2
@@ -39,7 +39,7 @@ cd "$REPO_DIR"
     
     # MP-SPDZ specific part: compile experiment
     # only compile if not already compiled
-    if [ $features -eq -1 ]; then
+    if [ $features -eq 0]; then
         binarypath="Programs/Bytecode/experiment-$size-$partysize-$etype-0.bc"
         if [ ! -f "$binarypath" ]; then
         case "$cdomain" in
@@ -149,7 +149,7 @@ for protocol in "${protocols[@]}"; do
         runflags="${runflags//-u/}"
     fi
 
-    if [$features -eq -1]; then
+    if [$features -eq 0]; then
         $skip ||
         /bin/time -f "$timerf" ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
             experiment-"$size"-"$partysize"-"$etype" &> "$log" || success=false
