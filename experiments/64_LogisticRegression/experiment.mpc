@@ -31,15 +31,12 @@ batch = int(program.args[2])
 
 ml.Layer.back_batch_size = batch
 
-try:
-   n_iterations = int(program.args[3])
-except:
-   n_iterations = 1
 
-try:
-   ml.set_n_threads(int(program.args[4]))
-except:
-   ml.set_n_threads(None)
+n_iterations = 100
+
+
+ml.set_n_threads(32)
+
 
 dense = ml.Dense(batch, dim, 1)
 sigmoid = ml.Output(batch, debug=debug, approx='approx')
