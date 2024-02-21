@@ -17,6 +17,7 @@ EXPERIMENT=$(pos_get_variable experiment --from-global)
 runflags=$(pos_get_variable runflags --from-global)
 [ "$runflags" == None ] && runflags=""
 size=$(pos_get_variable input_size --from-loop)
+features= $(pos_get_variable input2_size --from-loop) || features=-1
 timerf="%M (Maximum resident set size in kbytes)\n%e (Elapsed wall clock time in seconds)\n%P (Percent of CPU this job got)\n%S (System time in seconds)"
 player=$1
 cdomain=$2
@@ -35,11 +36,12 @@ cd "$REPO_DIR"
 
 {
     echo "player: $player, cdomain: $cdomain, protocols: ${protocols[*]}, types: ${types[*]}"
-
+    
     # MP-SPDZ specific part: compile experiment
     # only compile if not already compiled
-    binarypath="Programs/Bytecode/experiment-$size-$partysize-$etype-0.bc"
-    if [ ! -f "$binarypath" ]; then
+    if [ $features -eq -1 ]; then
+        binarypath="Programs/Bytecode/experiment-$size-$partysize-$etype-0.bc"
+        if [ ! -f "$binarypath" ]; then
         case "$cdomain" in
             RING) 
                 /bin/time -f "$timerf" ./compile.py -Z 3 -R 128 experiment "$size" "$partysize" "$etype";;
@@ -50,6 +52,21 @@ cd "$REPO_DIR"
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
     fi
+    else
+        binarypath="Programs/Bytecode/experiment-$size-$features-$partysize-$etype-0.bc"
+        if [ ! -f "$binarypath" ]; then
+        case "$cdomain" in
+            RING) 
+                /bin/time -f "$timerf" ./compile.py -Z 3 -R 128 experiment "$size" "$features" "$partysize" "$etype";;
+            BINARY) 
+                /bin/time -f "$timerf" ./compile.py -B 32 experiment "$size" "$features" "$partysize" "$etype";;
+            *) # default to FIELD
+                /bin/time -f "$timerf" ./compile.py -Y experiment "$size" "$features" "$partysize" "$etype";;
+        esac
+        echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
+    fi
+    fi
+    
 } |& tee measurementlog"$cdomain"
 
 ####
@@ -132,10 +149,17 @@ for protocol in "${protocols[@]}"; do
         runflags="${runflags//-u/}"
     fi
 
-    # run the SMC protocol
-    $skip ||
+    if [$features -eq -1]; then
+        $skip ||
         /bin/time -f "$timerf" ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
             experiment-"$size"-"$partysize"-"$etype" &> "$log" || success=false
+    else
+        $skip ||
+        /bin/time -f "$timerf" ./"$protocol" $runflags -h 10.10."$network".2 $extraflag -p "$player" \
+            experiment-"$size"-"$features"-"$partysize"-"$etype" &> "$log" || success=false
+    fi
+    # run the SMC protocol
+    
 
     pos_upload --loop "$log"
 

@@ -102,6 +102,7 @@ FIELDPROTOCOLS=()
 RINGPROTOCOLS=()
 BINARYPROTOCOLS=()
 INPUTS=()
+INPUTS2=()
 CPUS=()
 QUOTAS=()
 FREQS=()
@@ -129,7 +130,7 @@ setParameters() {
     # define the flags for the parameters
     # ':' means that the flag expects an argument.
     SHORT=e:,n:,p:,i:,m,c:,q:,f:,r:,l:,b:,d:,x,h
-    LONG=experiment:,etype:,compflags:,progflags:,runflags:,nodes:,protocols:,maldishonest,codishonest,semidishonest,malhonest,semihonest,field,ring,binary,all,input:,measureram,cpu:,cpuquota:,freq:,ram:,swap:,config:,latency:,bandwidth:,packetdrop:,help
+    LONG=experiment:,etype:,compflags:,progflags:,runflags:,nodes:,protocols:,maldishonest,codishonest,semidishonest,malhonest,semihonest,field,ring,binary,all,input:,input2:,measureram,cpu:,cpuquota:,freq:,ram:,swap:,config:,latency:,bandwidth:,packetdrop:,help
 
     PARSED=$(getopt --options ${SHORT} \
                     --longoptions ${LONG} \
@@ -185,6 +186,9 @@ setParameters() {
                 PROTOCOLS=( "${supportedFieldProtocols[@]}" "${supportedRingProtocols[@]}" "${supportedBinaryProtocols[@]//real-bmr/}");;
             -i|--input)
                 setArray INPUTS "$2"
+                shift;;
+            --input2)
+                setArray INPUTS2 "$2"
                 shift;;
             -m|--measureram)
                 TTYPES+=( MEASURERAM );;
@@ -313,6 +317,10 @@ setParameters() {
         parameters="${ttypes[*]}"
         echo "${type,,}: [${parameters// /, }]" >> "$loopvarpath"
     done
+    if [ "${#INPUTS2[*]}" -gt 0 ]; then
+        parameters="${INPUTS2[*]}"
+        echo "input2_size: [${parameters// /, }]" >> "$loopvarpath"
+    fi
     parameters="${INPUTS[*]}"
     echo "input_size: [${parameters// /, }]" >> "$loopvarpath"
 
