@@ -234,7 +234,7 @@ setParameters() {
         esac
         shift || true      # skip to next option-argument pair
     done
-    echo "Test2"
+    
     # valid experiment check
     if [ -f experiments/"$EXPERIMENT"/parameters.yml ]; then
         # get experiment node count from experiment parameters file
@@ -317,10 +317,12 @@ setParameters() {
         parameters="${ttypes[*]}"
         echo "${type,,}: [${parameters// /, }]" >> "$loopvarpath"
     done
+    echo "Test2"
     if [ "${#INPUTS2[*]}" -gt 0 ]; then
         parameters="${INPUTS2[*]}"
         echo "input2_size: [${parameters// /, }]" >> "$loopvarpath"
     fi
+    echo "Test3"
     parameters="${INPUTS[*]}"
     echo "input_size: [${parameters// /, }]" >> "$loopvarpath"
 
