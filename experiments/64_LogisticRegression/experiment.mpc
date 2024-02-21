@@ -53,4 +53,3 @@ sgd = ml.SGD([dense, sigmoid], n_iterations, debug=debug, report_loss=True)
 sgd.reset()
 
 sgd.run(batch_size=batch)
-
