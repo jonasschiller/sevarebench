@@ -35,7 +35,7 @@ ml.set_n_threads(32)
 
 
 dense = ml.Dense(batch, dim, 1)
-sigmoid = ml.Output(1, debug=debug, approx='approx')
+sigmoid = ml.Output(batch, debug=debug, approx='approx')
 
 for x in dense.X, sigmoid.Y:
    x.assign_all(0)
@@ -45,4 +45,4 @@ for x in dense.X, sigmoid.Y:
 sgd = ml.SGD([dense, sigmoid], n_iterations, debug=debug, report_loss=True)
 sgd.reset()
 
-sgd.run(batch_size=1)
+sgd.run(batch_size=batch)
