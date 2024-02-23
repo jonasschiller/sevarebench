@@ -25,12 +25,8 @@ program.options_from_args()
 #dim=X_train_0.shape[1]
 #batch=X_train_0.shape[0]
 
-
-dim = int(program.args[1])
-batch = int(program.args[2])
-
-ml.Layer.back_batch_size = batch
-
+batch = int(program.args[1])
+dim = int(program.args[2])
 
 n_iterations = 100
 
@@ -39,7 +35,7 @@ ml.set_n_threads(32)
 
 
 dense = ml.Dense(batch, dim, 1)
-sigmoid = ml.Output(batch, debug=debug, approx='approx')
+sigmoid = ml.Output(1, debug=debug, approx='approx')
 
 for x in dense.X, sigmoid.Y:
    x.assign_all(0)
@@ -49,4 +45,4 @@ for x in dense.X, sigmoid.Y:
 sgd = ml.SGD([dense, sigmoid], n_iterations, debug=debug, report_loss=True)
 sgd.reset()
 
-sgd.run(batch_size=batch)
+sgd.run(batch_size=1)
