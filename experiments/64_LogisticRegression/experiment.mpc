@@ -45,4 +45,4 @@ for x in dense.X, sigmoid.Y:
 sgd = ml.SGD([dense, sigmoid], n_iterations, debug=debug, report_loss=True)
 sgd.reset()
 
-sgd.run(batch_size=batch)
+sgd.run(batch_size=1)
