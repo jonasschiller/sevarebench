@@ -119,7 +119,7 @@ net = nn.Sequential(
                 nn.Linear(4096, num_classes),
         )
 
-ml.set_n_threads(8)
+ml.set_n_threads(40)
 ml.Layer.back_batch_size = batch_size
 
 #Load the parameters of the model
