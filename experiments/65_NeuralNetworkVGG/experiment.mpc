@@ -116,21 +116,14 @@ net = nn.Sequential(
                 nn.ReLU(True),
                 nn.Linear(4096, 4096),
                 nn.ReLU(True),
-                nn.Linear(4096, num_classes),
+                nn.Linear(4096, 10),
         )
 
 ml.set_n_threads(40)
 ml.Layer.back_batch_size = batch_size
 
-#Load the parameters of the model
-state_dict = torch.load('Programs/Source/VGG.pth')
-new_state_dict = {}
-for key1, key2 in zip(state_dict.keys(), net.state_dict().keys()):
-    new_state_dict[key2] = state_dict[key1]
-net.load_state_dict(new_state_dict)
-
 #set the layers of the graph
-layers=ml.layers_from_torch(net,[batch_size,3,32,32],batch_size,input_via=0)
+layers=ml.layers_from_torch(net,[batch_size,32,32,3],batch_size,input_via=0)
 graph=ml.Optimizer(layers)
 
 #Run the computation
