@@ -46,9 +46,9 @@ cd "$REPO_DIR"
             RING) 
                 /bin/time -f "$timerf" ./compile.py -Z 3 -R 128 experiment "$size" "$partysize" "$etype";;
             BINARY) 
-                /bin/time -f "$timerf" ./compile.py -B 1 experiment "$size" "$partysize" "$etype";;
+                /bin/time -f "$timerf" ./compile.py -B 32 experiment "$size" "$partysize" "$etype";;
             *) # default to FIELD
-                /bin/time -f "$timerf" ./compile.py experiment "$size" "$partysize" "$etype";;
+                /bin/time -f "$timerf" ./compile.py -Y experiment "$size" "$partysize" "$etype";;
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
         fi
