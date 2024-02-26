@@ -22,7 +22,6 @@ datatype = sint
 inputs=Array(input_size,datatype)
 #Use the same loop to calculate the min, max and sum of the values
 sum_value=Array(1,sint)
-total=Array(1,sint)
 inputs.assign_all(1)
 total=input_size
 sum_value[0]=0
