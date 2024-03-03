@@ -8,8 +8,8 @@ from Compiler import types
 
 import math
 n_inputs = int(program.args[1])
-priceRange= int(program.args[2])
-n_parties = int(program.args[3])
+priceRange= int(10)
+n_parties = int(program.args[2])
 
 n_bits = 32
 value_type = sint
@@ -30,7 +30,7 @@ offers_price.assign_all(5)
 offers_quantity = value_type.Array(n_inputs)
 offers_quantity.assign_all(5)
 
-def calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_quantity,>
+def calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_quantity,priceRange):
     @for_range_opt(priceRange)
     def loop(i):
         accumulatedSupply=0
@@ -50,7 +50,7 @@ def calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_quantity,>
     return index
 
 
-results = calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_qua>
+results = calculateBidingPrice(bids_price,bids_quantity,offers_price,offers_quantity,priceRange)
 
 print_ln('Market Clearing Price: %s', results.reveal())
 
