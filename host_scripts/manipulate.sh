@@ -92,8 +92,6 @@ setAllParameters() {
    # Add root qdisc with packet loss
  tc qdisc add dev "$NIC0" root netem rate "$bandwidth"mbit loss "$packetdrop"% delay "$latency"ms
 [ "$NIC1" != 0 ] && tc qdisc add dev "$NIC1" root netem rate "$bandwidth"mbit loss "$packetdrop"% delay "$latency"ms
-
-
 return 0
 }
 
