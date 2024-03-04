@@ -26,7 +26,7 @@ read -r -a protocols <<< "$3"
 # test types to simulate changing environments like cpu frequency or network latency
 read -r -a types <<< "$4"
 network="$5"
-partysize=$6
+partysize="$6"
 # experiment type to allow small differences in experiments
 etype=$7
 # default to etype 1 if unset
@@ -95,7 +95,7 @@ case " ${types[*]} " in
             *" LATENCIES "*)
             case " ${types[*]} " in
                 *" PACKETDROPS "*)
-                    setAllParameters;;
+                    setAllParameters "$partysize";;
                 *)
                 setLatencyBandwidth;;
             esac;;                 
