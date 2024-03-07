@@ -30,6 +30,7 @@ checkConnection() {
     $success
 }
 
+
 checkConnection "mirror.lrz.de"
 apt update
 apt install -y automake git libboost-dev libboost-thread-dev \

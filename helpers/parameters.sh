@@ -251,6 +251,25 @@ setParameters() {
     protocolcount="${#PROTOCOLS[*]}"
     [ "$protocolcount" -lt 1 ] && 
         usage "no protocols specified"
+    # generate loop-variables.yml (append random num to mitigate conflicts)
+    loopvarpath="experiments/$EXPERIMENT/loop-variables-$NETWORK.yml"
+    rm -f "$loopvarpath"
+    for type in "${TTYPES[@]}"; do
+        declare -n ttypes="${type}"
+        parameters="${ttypes[*]}"
+        echo "${type,,}: [${parameters// /, }]" >> "$loopvarpath"
+    done
+    if [ "${#INPUTS2[*]}" -gt 0 ]; then
+        parameters="${INPUTS2[*]}"
+        echo "input2_size: [${parameters// /, }]" >> "$loopvarpath"
+    fi
+    parameters="${INPUTS[*]}"
+    echo "input_size: [${parameters// /, }]" >> "$loopvarpath"
+
+    # delete line measureram from loop_var, if active
+    sed -i '/measureram/d' "$loopvarpath"
+    # set default swap size, in case --ram is defined
+    [ "${#RAM[*]}" -gt 0 ] && SWAP=${SWAP:-4096}
 
     #node already in use check
     nodetasks=$(pgrep -facu "$(id -u)" "${NODES[0]}")
@@ -308,26 +327,7 @@ setParameters() {
     done
     PROTOCOLS=( "${FIELDPROTOCOLS[@]}" "${RINGPROTOCOLS[@]}" "${BINARYPROTOCOLS[@]}" )
     
-    # generate loop-variables.yml (append random num to mitigate conflicts)
-    loopvarpath="experiments/$EXPERIMENT/loop-variables-$NETWORK.yml"
-    rm -f "$loopvarpath"
-    for type in "${TTYPES[@]}"; do
-        declare -n ttypes="${type}"
-        parameters="${ttypes[*]}"
-        echo "${type,,}: [${parameters// /, }]" >> "$loopvarpath"
-    done
-    echo "Test2"
-    if [ "${#INPUTS2[*]}" -gt 0 ]; then
-        parameters="${INPUTS2[*]}"
-        echo "input2_size: [${parameters// /, }]" >> "$loopvarpath"
-    fi
-    parameters="${INPUTS[*]}"
-    echo "input_size: [${parameters// /, }]" >> "$loopvarpath"
-
-    # delete line measureram from loop_var, if active
-    sed -i '/measureram/d' "$loopvarpath"
-    # set default swap size, in case --ram is defined
-    [ "${#RAM[*]}" -gt 0 ] && SWAP=${SWAP:-4096}
+    
 
     # Experiment run summary  information output
     SUMMARYFILE="$EXPORTPATH/E${EXPERIMENT::2}-run-summary.dat"
