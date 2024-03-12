@@ -23,12 +23,13 @@ b.assign_all(1)
 intersection = Array(n, sint)
 
 @for_range_opt(n)
-def _(i):
-	@for_range_opt(n)
-	def _(j):
-		match = a[i] == b[j]
-		intersection[i] = if_else(match, a[i], intersection[i]) 
-	
+def _(j):
+        match = a.get_vector() == b[j]
+        sum = 0
+        for i in range(n):
+                sum += match[i]
+        intersection[j] = if_else(sum>0, a[j], intersection[j])
+
 intersection.print_reveal_nested()
 
 
