@@ -57,11 +57,11 @@ cd "$REPO_DIR"
         if [ ! -f "$binarypath" ]; then
         case "$cdomain" in
             RING) 
-                /bin/time -f "$timerf" ./compile.py -Z 3 -R 128 --budget 200000 experiment "$size" "$features" "$partysize" "$etype";;
+                /bin/time -f "$timerf" ./compile.py -Z 3 -R 128 experiment "$size" "$features" "$partysize" "$etype";;
             BINARY) 
                 /bin/time -f "$timerf" ./compile.py -B 32 experiment "$size" "$features" "$partysize" "$etype";;
             *) # default to FIELD
-                /bin/time -f "$timerf" ./compile.py -Y --budget 200000 experiment "$size" "$features" "$partysize" "$etype";;
+                /bin/time -f "$timerf" ./compile.py -Y  experiment "$size" "$features" "$partysize" "$etype";;
         esac
         echo "$(du -BM "$binarypath" | cut -d 'M' -f 1) (Binary file size in MiB)"
         fi
