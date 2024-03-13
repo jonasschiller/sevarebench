@@ -50,6 +50,7 @@ raplaNIC1: enp130s0f0
 # yieldlyNIC1: ens4f0
 # yieldlyNIC2: ens2f1
 
+#update
 #three nodes config
 idexNIC0: ens2f1
 idexNIC1: ens4f1
