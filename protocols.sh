@@ -10,7 +10,7 @@ supportedFieldProtocols=( mascot lowgear highgear cowgear chaigear semi hemi
     temi soho malicious-shamir malicious-rep-field ps-rep-field sy-rep-field 
     shamir atlas replicated-field )
 supportedRingProtocols=( spdz2k semi2k brain malicious-rep-ring ps-rep-ring 
-    sy-rep-ring replicated-ring )
+    sy-rep-ring replicated-ring rep4-ring)
 supportedBinaryProtocols=( tinier real-bmr semi-bin yao yaoO semi-bmr 
     malicious-rep-bin malicious-ccd ps-rep-bin mal-shamir-bmr mal-rep-bmr 
     replicated-bin ccd shamir-bmr rep-bmr )
@@ -22,7 +22,7 @@ malhonestProtocols=( malicious-shamir malicious-rep-field ps-rep-field sy-rep-fi
     brain malicious-rep-ring ps-rep-ring sy-rep-ring malicious-rep-bin 
     malicious-ccd ps-rep-bin mal-rep-bmr mal-shamir-bmr )
 semihonestProtocols=( shamir atlas replicated-field replicated-ring replicated-bin 
-    ccd shamir-bmr rep-bmr )
+    ccd shamir-bmr rep-bmr rep4-ring )
 # currently unsupported
 ##supportedRingProtocols+=( rep4-ring )
 ##supportedBinaryProtocols+=( tiny )
